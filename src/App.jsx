@@ -129,7 +129,7 @@ export default function App() {
             </p>
             <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-7xl">
               Munezero
-              <span className="block text-ember">Fiale</span>
+              <span className="block text-ember">Fiable</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-white/70">{profile.role} building human-centered products with React, Node.js, and a growing focus on data science.</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -163,7 +163,7 @@ export default function App() {
             <div className="photo-glow relative overflow-hidden rounded-[2rem] bg-ink-soft">
               <img
                 src={profile.photo}
-                alt="Portrait of Munezero Fiale"
+                alt="Portrait of Munezero Fiable"
                 width={397}
                 height={634}
                 fetchPriority="high"

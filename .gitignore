@@ -5,3 +5,5 @@ dist
 tmp-photos
 extract_photo.py
 convert_photo.py
+.vercel
+.env*
