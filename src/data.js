@@ -1,11 +1,11 @@
 export const profile = {
-  name: "Munezero Fiale",
+  name: "Munezero Fiable",
   role: "Full-stack developer",
   location: "Kanombe, Kigali, Rwanda",
   phone: "+250 795 125 508",
   phoneHref: "tel:+250795125508",
-  email: "fialemunezero@gmail.com",
-  emailHref: "mailto:fialemunezero@gmail.com",
+  email: "fiablemunezero@gmail.com",
+  emailHref: "mailto:fiablemunezero@gmail.com",
   photo: "./munezero.webp",
   photoFallback: "./munezero.png",
   summary:
