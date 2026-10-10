@@ -6,6 +6,7 @@ export const profile = {
   phoneHref: "tel:+250795125508",
   email: "fiablemunezero@gmail.com",
   emailHref: "mailto:fiablemunezero@gmail.com",
+  formEndpoint: "https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID",
   photo: "./munezero.webp",
   photoFallback: "./munezero.png",
   summary:

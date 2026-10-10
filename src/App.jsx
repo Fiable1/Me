@@ -45,6 +45,7 @@ function IconPin(props) {
 export default function App() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -53,15 +54,34 @@ export default function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const name = form.get("name");
     const email = form.get("email");
     const message = form.get("message");
-    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
-    window.location.href = `${profile.emailHref}?subject=${subject}&body=${body}`;
+
+    if (profile.formEndpoint.includes("REPLACE_WITH_YOUR_FORM_ID")) {
+      const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
+      window.location.href = `${profile.emailHref}?subject=${subject}&body=${body}`;
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const response = await fetch(profile.formEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: form,
+      });
+      if (!response.ok) throw new Error("Request failed");
+      formElement.reset();
+      setStatus("success");
+    } catch (error) {
+      setStatus("error");
+    }
   };
 
   return (
@@ -77,7 +97,7 @@ export default function App() {
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <a href="#top" className="text-sm font-extrabold tracking-[0.22em] uppercase">
-            MF<span className="text-ember">.</span>
+            Munezero Fiable<span className="text-ember">.</span>
           </a>
           <nav className="hidden items-center gap-8 text-sm font-medium text-white/70 md:flex">
             {nav.map((item) => (
@@ -344,17 +364,28 @@ export default function App() {
               </label>
               <button
                 type="submit"
-                className="mt-6 w-full rounded-full bg-ember py-3 font-bold text-ink transition hover:bg-ember-bright"
+                disabled={status === "sending"}
+                className="mt-6 w-full rounded-full bg-ember py-3 font-bold text-ink transition hover:bg-ember-bright disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send message
+                {status === "sending" ? "Sending…" : "Send message"}
               </button>
+              {status === "success" && (
+                <p className="mt-4 text-sm text-ember">
+                  Thanks! Your message has been sent directly to my inbox.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-4 text-sm text-red-400">
+                  Something went wrong. Please email me directly at {profile.email}.
+                </p>
+              )}
             </form>
           </div>
         </section>
       </main>
 
       <footer className="border-t border-white/10 px-5 py-8 text-center text-sm text-white/40">
-        © {new Date().getFullYear()} Munezero Fiale. Built with React and Tailwind.
+        © {new Date().getFullYear()} Munezero Fiable. Built with React and Tailwind.
       </footer>
     </div>
   );
